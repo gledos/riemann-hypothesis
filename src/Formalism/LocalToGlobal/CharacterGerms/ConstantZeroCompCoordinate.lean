@@ -206,7 +206,7 @@ theorem zl_hAB (Y : FBChart C V O dd) {A B : Pt C 1 dd} (hA : ∀ i, constantCoe
     rw [ev_neg hZA, ev_sum hZA]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hZA, ev_C, ev_ev hZ hZA]
+    rw [Formalism.L2.FormalSeriesBounds.PartialDerivEval.ev_mul hZA, PartialDerivEval.ev_C, ev_ev hZ hZA]
     congr 2
     funext k j
     fin_cases k
