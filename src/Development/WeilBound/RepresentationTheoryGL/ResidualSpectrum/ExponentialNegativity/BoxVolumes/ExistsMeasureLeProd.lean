@@ -27,6 +27,7 @@ theorem exists_measure_le_prod (μ : Measure (AdelicGLn.AdelicGL K n)) [μ.IsHaa
   set ρ : Measure ((Π w : InfinitePlace K, GL (Fin n) w.Completion) × AdelicGLn.FiniteAdelicGL K n) :=
     (Measure.pi fun w => (Measure.haar : Measure (GL (Fin n) w.Completion))).prod
       (Measure.haar : Measure (AdelicGLn.FiniteAdelicGL K n)) with hρ
+  have : ρ.IsHaarMeasure := Measure.prod.instIsHaarMeasure _ _
   have hν : (Measure.map e μ).IsHaarMeasure :=
     MulEquiv.isHaarMeasure_map μ e.toMulEquiv e.continuous e.symm.continuous
   have heq := Measure.isMulLeftInvariant_eq_smul (Measure.map e μ) ρ
