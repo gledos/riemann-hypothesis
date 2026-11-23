@@ -267,20 +267,20 @@ theorem chart_iff {R : Type} [CommRing R] (x : Sp R ⟶ Xo.X) (q : Sp ℂ ⟶ Gx
     exact Set.mem_iInter.2 fun _ => hp
 
 theorem exists_pt {R : Type} [CommRing R] (x : Sp R ⟶ Xo.X) (s : Sp ℂ ⟶ Sp R) (p : Sp ℂ ⟶ Xo.univ.t.G.left)
-    (h : s ≫ x = p ≫ Xo.univ.t.G.hom) : ∃ q : Sp ℂ ⟶ Gx x, q ≫ Formalism.L2.PjFree.gxFst x = p ∧ q ≫ gxSnd x = s :=
+    (h : s ≫ x = p ≫ Xo.univ.t.G.hom) : ∃ q : Sp ℂ ⟶ Gx x, q ≫ Formalism.L2.PjFree.gxFst x = p ∧ q ≫ Formalism.L2.PjFree.gxSnd x = s :=
   ⟨pullback.lift (f := x) (g := Xo.univ.t.G.hom) s p h, pullback.lift_snd _ _ _, pullback.lift_fst _ _ _⟩
 
 theorem val_pull {R : Type} [CommRing R] (φ : R →+* ℂ) (x₀ : Sp R ⟶ Xo.X) (x : Sp ℂ ⟶ Xo.X)
     (s₀ : LB.Sec (PPx x₀)) (s : LB.Sec (PPx x)) (pm : Gx x ⟶ Gx x₀) (h₁ : pm ≫ Formalism.L2.PjFree.gxFst x₀ = Formalism.L2.PjFree.gxFst x)
-    (h₂ : pm ≫ gxSnd x₀ = gxSnd x ≫ spMap φ)
+    (h₂ : pm ≫ Formalism.L2.PjFree.gxSnd x₀ = Formalism.L2.PjFree.gxSnd x ≫ spMap φ)
     (h₃ : ∀ (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx x).U i ≤ pm ⁻¹ᵁ (PPx x₀).U i),
       (pm.appLE _ _ h).hom (s₀.f i) = s.f i)
     (i : Fin 1 → Xo.univ.t.PP.L.ι) (pt : Sp ℂ ⟶ Gx x) (q : Sp ℂ ⟶ Gx x₀) (e₁ : q ≫ Formalism.L2.PjFree.gxFst x₀ = pt ≫ Formalism.L2.PjFree.gxFst x)
-    (e₂ : pt ≫ gxSnd x = 𝟙 _) (e₃ : q ≫ gxSnd x₀ = spMap φ) (hp : ⊤ ≤ pt ⁻¹ᵁ (PPx x).U i) :
+    (e₂ : pt ≫ Formalism.L2.PjFree.gxSnd x = 𝟙 _) (e₃ : q ≫ Formalism.L2.PjFree.gxSnd x₀ = spMap φ) (hp : ⊤ ≤ pt ⁻¹ᵁ (PPx x).U i) :
     valAt' pt ((PPx x).U i) (s.f i) = valAt' q ((PPx x₀).U i) (s₀.f i) := by
   have hq : q = pt ≫ pm := SecCalc.pm_ext _ _
     (e₁.trans (show pt ≫ Formalism.L2.PjFree.gxFst x = (pt ≫ pm) ≫ Formalism.L2.PjFree.gxFst x₀ by rw [Category.assoc, h₁]))
-    (e₃.trans (show spMap φ = (pt ≫ pm) ≫ gxSnd x₀ by
+    (e₃.trans (show spMap φ = (pt ≫ pm) ≫ Formalism.L2.PjFree.gxSnd x₀ by
       rw [Category.assoc, h₂, ← Category.assoc, e₂, Category.id_comp]))
   rw [← h₃ i (SecCalc.ppx_le pm h₁ i), hq]
   exact valAt'_appLE pt pm _ _ _ _ hp
@@ -288,11 +288,11 @@ theorem val_pull {R : Type} [CommRing R] (φ : R →+* ℂ) (x₀ : Sp R ⟶ Xo.
 theorem val_mul_pull (hT : Out.SecTwistSt) {R : Type} [CommRing R] (φ : R →+* ℂ) (a : ℂ) (x₀ : Sp R ⟶ Xo.X)
     (x y : Sp ℂ ⟶ Xo.X) (hxy : y = x)
     (s₀ : LB.Sec (PPx x₀)) (s : LB.Sec (PPx x)) (t : LB.Sec (PPx y)) (pm : Gx x ⟶ Gx x₀)
-    (h₁ : pm ≫ Formalism.L2.PjFree.gxFst x₀ = Formalism.L2.PjFree.gxFst x) (h₂ : pm ≫ gxSnd x₀ = gxSnd x ≫ spMap φ)
+    (h₁ : pm ≫ Formalism.L2.PjFree.gxFst x₀ = Formalism.L2.PjFree.gxFst x) (h₂ : pm ≫ Formalism.L2.PjFree.gxSnd x₀ = Formalism.L2.PjFree.gxSnd x ≫ spMap φ)
     (h₃ : ∀ (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx x).U i ≤ pm ⁻¹ᵁ (PPx x₀).U i),
       (pm.appLE _ _ h).hom (s₀.f i) = s.f i) (hst : SecBC (RingHom.id ℂ) a x y s t)
     (i : Fin 1 → Xo.univ.t.PP.L.ι) (pt : Sp ℂ ⟶ Gx y) (q : Sp ℂ ⟶ Gx x₀) (e₁ : q ≫ Formalism.L2.PjFree.gxFst x₀ = pt ≫ Formalism.L2.PjFree.gxFst y)
-    (e₂ : pt ≫ gxSnd y = 𝟙 _) (e₃ : q ≫ gxSnd x₀ = spMap φ) (hp : ⊤ ≤ pt ⁻¹ᵁ (PPx y).U i) :
+    (e₂ : pt ≫ Formalism.L2.PjFree.gxSnd y = 𝟙 _) (e₃ : q ≫ Formalism.L2.PjFree.gxSnd x₀ = spMap φ) (hp : ⊤ ≤ pt ⁻¹ᵁ (PPx y).U i) :
     valAt' pt ((PPx y).U i) (t.f i) = a * valAt' q ((PPx x₀).U i) (s₀.f i) := by
   subst hxy
   have hy : y = spMap (RingHom.id ℂ) ≫ y := by rw [SecCalc.spMap_id', Category.id_comp]
@@ -302,15 +302,15 @@ theorem val_mul_pull (hT : Out.SecTwistSt) {R : Type} [CommRing R] (φ : R →+*
 
 theorem exists_val_ne (hT : Out.SecTwistSt) {R : Type} [CommRing R] (φ : R →+* ℂ) (x₀ : Sp R ⟶ Xo.X)
     (x u : Sp ℂ ⟶ Xo.X) (hu : u = x) (s₀ : LB.Sec (PPx x₀)) (s : LB.Sec (PPx x)) (pm : Gx x ⟶ Gx x₀)
-    (h₁ : pm ≫ Formalism.L2.PjFree.gxFst x₀ = Formalism.L2.PjFree.gxFst x) (h₂ : pm ≫ gxSnd x₀ = gxSnd x ≫ spMap φ)
+    (h₁ : pm ≫ Formalism.L2.PjFree.gxFst x₀ = Formalism.L2.PjFree.gxFst x) (h₂ : pm ≫ Formalism.L2.PjFree.gxSnd x₀ = Formalism.L2.PjFree.gxSnd x ≫ spMap φ)
     (h₃ : ∀ (i : Fin 1 → Xo.univ.t.PP.L.ι) (h : (PPx x).U i ≤ pm ⁻¹ᵁ (PPx x₀).U i),
-      (pm.appLE _ _ h).hom (s₀.f i) = s.f i) (hs : SecGen x s) :
+      (pm.appLE _ _ h).hom (s₀.f i) = s.f i) (hs : GlobalTheory.Frames.SecGen x s) :
     ∃ (e : Over.mk u ⟶ Xo.univ.t.G) (j : Xo.univ.t.PP.L.ι), ∀ q : Sp ℂ ⟶ Gx x₀, q ≫ Formalism.L2.PjFree.gxFst x₀ = e.left →
-      q ≫ gxSnd x₀ = spMap φ → valAt' q ((PPx x₀).U (fun _ => j)) (s₀.f (fun _ => j)) ≠ 0 := by
+      q ≫ Formalism.L2.PjFree.gxSnd x₀ = spMap φ → valAt' q ((PPx x₀).U (fun _ => j)) (s₀.f (fun _ => j)) ≠ 0 := by
   subst hu
   obtain ⟨i, pt, hpt, hv⟩ := (sec_values_complex_fibre hT E H Dw l Xo u s).2.1.1 hs
   obtain ⟨j, rfl⟩ : ∃ j, i = fun _ => j := ⟨i (0 : Fin 1), funext fun k : Fin 1 => congrArg i (Subsingleton.elim _ _)⟩
-  have hc : gxSnd u ≫ u = Formalism.L2.PjFree.gxFst u ≫ Xo.univ.t.G.hom := pullback.condition (f := u) (g := Xo.univ.t.G.hom)
+  have hc : Formalism.L2.PjFree.gxSnd u ≫ u = Formalism.L2.PjFree.gxFst u ≫ Xo.univ.t.G.hom := pullback.condition (f := u) (g := Xo.univ.t.G.hom)
   refine ⟨Over.homMk (pt ≫ Formalism.L2.PjFree.gxFst u) ?_, j, fun q e₁ e₃ => ?_⟩
   · show (pt ≫ Formalism.L2.PjFree.gxFst u) ≫ Xo.univ.t.G.hom = u
     rw [Category.assoc, ← hc, ← Category.assoc, hpt, Category.id_comp]
@@ -319,10 +319,10 @@ theorem exists_val_ne (hT : Out.SecTwistSt) {R : Type} [CommRing R] (φ : R →+
 
 end
 
-theorem differentiableOn_generator_factor : Out.SecTwistSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (g : ℕ) (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)) (F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => relab c σ (e j).1)) (r : ℕ) (M : ModelsOf F r) (k : Fin F.n) (T : ThetaData e F M k) (R : Type) [CommRing R] [Algebra c.F R] (y₀ : FrPt Xo c R) (B : Set (Fin T.m → ℂ)) (ψ : (Fin T.m → ℂ) → (R →ₐ[c.F] CAt σ)) (κ : (Fin T.m → ℂ) → ℂ) (z y : (Fin T.m → ℂ) → FrPt Xo c (CAt σ)) (G : (Fin T.m → ℂ) → (∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) (CAt σ))) (a : (Fin T.m → ℂ) → CAt σ), IsOpen B → B ⊆ T.co ⁻¹' (M.X k).dom → (∀ t : R, DifferentiableOn ℂ (fun b => toC (ψ b t)) B) → (∀ b ∈ B, FrMap (ψ b) y₀ (z b) ∧ FrChg (G b) (a b) (z b) (y b) ∧ IsThetaPt T b (κ b) (y b)) → DifferentiableOn ℂ κ B → DifferentiableOn ℂ (fun b => toC (a b)) B := by
+theorem differentiableOn_generator_factor : Out.SecTwistSt → ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) (Dw : Datum H) (l : Level H) (Xo : Moduli Dw l) (c : Coeff l) (σ : c.F →+* ℂ) (g : ℕ) (e : Fin g ≃ Σ τ : E →+* ℂ, Fin (Dw.mult τ)) (F : FamilyUnif Xo (σ.comp (IntermediateField.inclusion c.le).toRingHom) (fun j => Formalism.L2.PjFree.relab c σ (e j).1)) (r : ℕ) (M : ModelsOf F r) (k : Fin F.n) (T : ThetaData e F M k) (R : Type) [CommRing R] [Algebra c.F R] (y₀ : FrPt Xo c R) (B : Set (Fin T.m → ℂ)) (ψ : (Fin T.m → ℂ) → (R →ₐ[c.F] CAt σ)) (κ : (Fin T.m → ℂ) → ℂ) (z y : (Fin T.m → ℂ) → FrPt Xo c (CAt σ)) (G : (Fin T.m → ℂ) → (∀ τ : E →+* ℂ, Matrix (Fin (Dw.mult τ)) (Fin (Dw.mult τ)) (CAt σ))) (a : (Fin T.m → ℂ) → CAt σ), IsOpen B → B ⊆ T.co ⁻¹' (M.X k).dom → (∀ t : R, DifferentiableOn ℂ (fun b => Formalism.L2.PjFree.toC (ψ b t)) B) → (∀ b ∈ B, FrMap (ψ b) y₀ (z b) ∧ FrChg (G b) (a b) (z b) (y b) ∧ IsThetaPt T b (κ b) (y b)) → DifferentiableOn ℂ κ B → DifferentiableOn ℂ (fun b => Formalism.L2.PjFree.toC (a b)) B := by
   intro hT E _ _ _ H Dw l Xo c σ g e F r M k T R _ _ y₀ B ψ κ z y G a hB hBd hψ hb hκ b₀ hb₀
   let φ : (Fin T.m → ℂ) → (R →+* ℂ) := fun b => (ψ b).toRingHom
-  have hP : IsHolPeriods (F.Di k) (fun j => relab c σ (e j).1) B (fun b => T.Pf (T.co b)) :=
+  have hP : IsHolPeriods (F.Di k) (fun j => Formalism.L2.PjFree.relab c σ (e j).1) B (fun b => T.Pf (T.co b)) :=
     ⟨fun b hb => T.holPer.1 b (hBd hb), fun x => (T.holPer.2 x).mono hBd⟩
   have hux : ∀ b ∈ B, F.u k (T.Pf (T.co b)) = (z b).x := fun b h =>
     (hb b h).2.2.1.symm.trans (hb b h).2.1.1
@@ -330,17 +330,17 @@ theorem differentiableOn_generator_factor : Out.SecTwistSt → ∀ (E : Type) [F
   obtain ⟨e₀, j, hne⟩ := exists_val_ne hT (φ b₀) y₀.x (z b₀).x _ (hux b₀ hb₀) y₀.s (z b₀).s pm₀ p₁ p₂ p₃ (z b₀).gen
   obtain ⟨w₀, rfl⟩ := F.ex_onto k _ (hP.1 b₀ hb₀) e₀
   have hq₁ : ∀ b ∈ B, ∃ q : Sp ℂ ⟶ Gx y₀.x, q ≫ Formalism.L2.PjFree.gxFst y₀.x = (F.ex k (T.Pf (T.co b)) w₀).left ∧
-      q ≫ gxSnd y₀.x = spMap (φ b) := fun b h =>
+      q ≫ Formalism.L2.PjFree.gxSnd y₀.x = spMap (φ b) := fun b h =>
     exists_pt _ _ _ (((hb b h).1.1.symm.trans (hux b h).symm).trans (Over.w (F.ex k (T.Pf (T.co b)) w₀)).symm)
   have hq₂ : ∀ b, ∃ q : Sp ℂ ⟶ Gx y₀.x, b ∈ B → q ≫ Formalism.L2.PjFree.gxFst y₀.x = (F.ex k (T.Pf (T.co b)) w₀).left ∧
-      q ≫ gxSnd y₀.x = spMap (φ b) := fun b => by
+      q ≫ Formalism.L2.PjFree.gxSnd y₀.x = spMap (φ b) := fun b => by
     by_cases h : b ∈ B
     · exact (hq₁ b h).imp fun _ h' _ => h'
     · exact ⟨(hq₁ b₀ hb₀).choose, fun h' => absurd h' h⟩
   choose q hq using hq₂
   have hι : Differentiable ℂ (fun b : Fin T.m → ℂ => ((b, w₀) : (Fin T.m → ℂ) × (Fin g → ℂ))) := by fun_prop
   have hol : IsHolTo B q := by
-    refine HolPullback.isHolTo_of_components _ B _ _ _ _ (gxSnd y₀.x) (Formalism.L2.PjFree.gxFst y₀.x) y₀.x Xo.univ.t.G.hom q
+    refine HolPullback.isHolTo_of_components _ B _ _ _ _ (Formalism.L2.PjFree.gxSnd y₀.x) (Formalism.L2.PjFree.gxFst y₀.x) y₀.x Xo.univ.t.G.hom q
       (IsPullback.of_hasPullback y₀.x Xo.univ.t.G.hom) hB ?_ ?_
     · exact LocLift.isHolTo_congr (ThetaValueCont.isHolTo_spMap hB φ hψ) fun b h => (hq b h).2
     · exact LocLift.isHolTo_congr (LocLift.isHolTo_comp (F.hol k _ B _ hB hP).2 hB hι.differentiableOn
@@ -369,16 +369,16 @@ theorem differentiableOn_generator_factor : Out.SecTwistSt → ∀ (E : Type) [F
   have d₃ : DifferentiableOn ℂ (fun b => valAt' (q b) ((PPx y₀.x).U (fun _ => j)) (y₀.s.f (fun _ => j))) W :=
     (hol _ _).2.mono fun b h => ⟨h.1, m₁ b h⟩
   have key : ∀ b ∈ W, κ b * thetaChar (T.ta b) T.c₁ T.c₂ (T.h b *ᵥ w₀) * T.fr j (b, w₀) =
-      toC (a b) * valAt' (q b) ((PPx y₀.x).U (fun _ => j)) (y₀.s.f (fun _ => j)) := fun b h => by
+      Formalism.L2.PjFree.toC (a b) * valAt' (q b) ((PPx y₀.x).U (fun _ => j)) (y₀.s.f (fun _ => j)) := fun b h => by
     obtain ⟨⟨-, -, pm, p₁, p₂, p₃⟩, ⟨hyz, -, hbc⟩, hyu, -, hth⟩ := hb b h.1
     obtain ⟨pt, e₁, e₂⟩ := exists_pt (R := ℂ) (y b).x (𝟙 _) (F.ex k (T.Pf (T.co b)) w₀).left
       (((Category.id_comp _).trans hyu).trans (Over.w (F.ex k (T.Pf (T.co b)) w₀)).symm)
     refine (hth j w₀ pt e₁ e₂ (m₂ b h)).symm.trans ?_
-    refine val_mul_pull hT (φ b) (toC (a b)) y₀.x (z b).x (y b).x hyz y₀.s (z b).s (y b).s pm p₁ p₂ p₃ hbc _ pt (q b)
+    refine val_mul_pull hT (φ b) (Formalism.L2.PjFree.toC (a b)) y₀.x (z b).x (y b).x hyz y₀.s (z b).s (y b).s pm p₁ p₂ p₃ hbc _ pt (q b)
       ((hq b h.1).1.trans e₁.symm) e₂ (hq b h.1).2 ((chart_iff _ _ _).2 ?_)
     rw [e₁]
     exact m₂ b h
-  have d : DifferentiableOn ℂ (fun b => toC (a b)) W := (((d₀.mul d₁).mul d₂).mul (d₃.inv vnz)).congr fun b h =>
+  have d : DifferentiableOn ℂ (fun b => Formalism.L2.PjFree.toC (a b)) W := (((d₀.mul d₁).mul d₂).mul (d₃.inv vnz)).congr fun b h =>
     ((mul_inv_eq_iff_eq_mul₀ (vnz b h)).2 (key b h)).symm
   exact (d.differentiableAt (hW.mem_nhds hb₀W)).differentiableWithinAt
 

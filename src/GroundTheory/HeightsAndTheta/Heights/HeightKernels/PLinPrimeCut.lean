@@ -287,7 +287,7 @@ theorem main {n : ℕ} (α : T → k) (M : T → Fin (n + 2) → k) (hα : Submo
     · exact h4
   have hMin : W ∈ J.minimalPrimes :=
     ⟨⟨hWprime, hJW⟩, fun Q hQ hQW => absorb Q hQ.1 hQ.2 s₀ fun h => hX s₀ hs₀ (hQW h)⟩
-  have hRel : IsRelevant W := by
+  have hRel : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant W := by
     rintro (⟨⟩ | ⟨⟩)
     · exact ⟨s₀, hX s₀ hs₀⟩
     · by_contra hall

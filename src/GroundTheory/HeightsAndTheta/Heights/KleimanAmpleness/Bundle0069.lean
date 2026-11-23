@@ -224,7 +224,7 @@ theorem embed_apply (a : (Σ k, ι k) → ℤ) (n : ℕ) (f : CombC S (negSet a)
   rfl
 
 theorem embed_mem_cechBc (hE : KHFreeEmbed.Statement) {a : (Σ k, ι k) → ℤ} {c d : K → ℤ}
-    (ha : blockSum a = c + d) {n : ℕ} {b : CombC S (negSet a) n} (hb : b ∈ combB S (negSet a) n) :
+    (ha : GroundTheory.Heights₂.Heights.Kleiman.KHFree.blockSum a = c + d) {n : ℕ} {b : CombC S (negSet a) n} (hb : b ∈ combB S (negSet a) n) :
     embed S a n b ∈ KH.cechBc ι (fun c => KH.quotPart S (⊥ : Ideal (MRingOver S ι)) (c + d)) c n := by
   cases n with
   | zero =>
@@ -240,7 +240,7 @@ theorem cocycle_decomp (hE : KHFreeEmbed.Statement) (hD : KHFreeDecomp.Statement
     {c d : K → ℤ} {n : ℕ} {z : KH.CechC S ι (MRingOver S ι ⧸ (⊥ : Ideal (MRingOver S ι))) n}
     (hz : z ∈ KH.cechZc ι (fun c => KH.quotPart S (⊥ : Ideal (MRingOver S ι)) (c + d)) c n) :
     ∃ (A : Finset ((Σ k, ι k) → ℤ)) (f : ∀ a : (Σ k, ι k) → ℤ, CombC S (negSet a) n),
-      (∀ a ∈ A, blockSum a = c + d) ∧ z = ∑ a ∈ A, embed S a n (f a) ∧
+      (∀ a ∈ A, GroundTheory.Heights₂.Heights.Kleiman.KHFree.blockSum a = c + d) ∧ z = ∑ a ∈ A, embed S a n (f a) ∧
         ∀ a ∈ A, combD S (negSet a) n (f a) = 0 := by
   obtain ⟨A, f, hA, rfl⟩ := hD S K ι c d n z hz.1
   refine ⟨A, f, hA, rfl, hI S K ι (n + 1) A (fun a => combD S (negSet a) n (f a)) ?_⟩
@@ -269,7 +269,7 @@ theorem part_cyclic (hC : KHCombContract.Statement) (hY : KHCombCyclic.Statement
 
 
 omit [LinearOrder K] [∀ k, LinearOrder (ι k)] in
-theorem negSet_empty {a : (Σ k, ι k) → ℤ} {e : K → ℤ} (ha : blockSum a = e) (he : ∀ k, 0 ≤ e k) (hb : Bad a)
+theorem negSet_empty {a : (Σ k, ι k) → ℤ} {e : K → ℤ} (ha : GroundTheory.Heights₂.Heights.Kleiman.KHFree.blockSum a = e) (he : ∀ k, 0 ≤ e k) (hb : Bad a)
     (k : K) : negSet a k = ∅ := by
   rcases hb k with h | h
   · exact h
@@ -319,7 +319,7 @@ theorem finite (hE : KHFreeEmbed.Statement) (hD : KHFreeDecomp.Statement) (hI : 
   classical
   set Z := KH.cechZc ι (fun c => KH.quotPart S (⊥ : Ideal (MRingOver S ι)) (c + d)) c n
   set Bf := (hF K ι (c + d)).toFinset
-  have hBf : ∀ a ∈ Bf, blockSum a = c + d ∧ Bad a := fun a ha => (hF K ι (c + d)).mem_toFinset.mp ha
+  have hBf : ∀ a ∈ Bf, GroundTheory.Heights₂.Heights.Kleiman.KHFree.blockSum a = c + d ∧ Bad a := fun a ha => (hF K ι (c + d)).mem_toFinset.mp ha
   let gen : ((Σ k, ι k) → ℤ) → KH.CechC S ι (MRingOver S ι ⧸ (⊥ : Ideal (MRingOver S ι))) n :=
     fun a => embed S a n (singOne S (negSet a) n)
   have hgen : ∀ a ∈ Bf, gen a ∈ Z := fun a ha =>

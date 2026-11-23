@@ -57,7 +57,7 @@ theorem hA_sum' (x : VA X.B.I) (s : Finset (Kap X)) (c : Kap X → RA X) (v : Ka
     rw [show hA X.B.I x (c a • v a) = c a * hA X.B.I x (v a) from DictLat.hhat_smul_right X.B.I _ _ _]
 
 theorem hA_incl (v w : Fin X.B.I.n → X.B.I.E) :
-    hA X.B.I (incl X.B.I v) (incl X.B.I w) = ic X (hE X v w) := DictLat.hhat_iv X.B.I v w
+    hA X.B.I (incl X.B.I v) (incl X.B.I w) = ic X (UnipB.hE X v w) := DictLat.hhat_iv X.B.I v w
 
 theorem hA_e_Bf (a : Fin D.R.rS) (c : Kap X → RA X) :
     hA X.B.I (incl X.B.I (X.eR a)) (Bf X *ᵥ c) = c (Sum.inr (Sum.inr a)) := by

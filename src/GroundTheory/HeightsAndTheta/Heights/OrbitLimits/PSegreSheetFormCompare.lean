@@ -55,7 +55,7 @@ theorem sum_norm_segre_sq [DecidableEq K] (w : (Σ k, ι k) → ℂ) :
 
 
 omit [DecidableEq K] [∀ k, Fintype (ι k)] in
-theorem log_h_smul (A : HermLine ι) (c : K → ℂ) (w : (Σ k, ι k) → ℂ) (hc : ∀ k, c k ≠ 0)
+theorem log_h_smul (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (c : K → ℂ) (w : (Σ k, ι k) → ℂ) (hc : ∀ k, c k ≠ 0)
     (hw : ∀ k, ∃ j, w ⟨k, j⟩ ≠ 0) :
     Real.log (A.h (fun p => c p.1 * w p)) = Real.log (A.h w) + ∑ k, (A.a k : ℝ) * Real.log ‖c k‖ := by
   have hp : ∀ k, 0 < ‖c k‖ ^ A.a k := fun k => zpow_pos (norm_pos_iff.2 (hc k)) _
@@ -196,7 +196,7 @@ theorem log_segre_eq (w : (Σ k, ι k) → ℂ) (hw : ∀ k, w ⟨k, jj k⟩ ≠
 
 
 omit [DecidableEq K] in
-theorem pot_eq {e : ℕ} (L : Fin e → HermLine ι) (j : Fin e) (w : (Σ k, ι k) → ℂ)
+theorem pot_eq {e : ℕ} (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (j : Fin e) (w : (Σ k, ι k) → ℂ)
     (hw : ∀ k, w ⟨k, jj k⟩ ≠ 0) :
     pot L j w = pot L j (ins jj (nrm jj w)) + ∑ k, ((L j).a k : ℝ) * Real.log ‖w ⟨k, jj k⟩‖ := by
   have he := eq_smul_ins jj w hw
@@ -219,7 +219,7 @@ theorem contDiff_FSG : ContDiff ℝ 2 (FSG ι) := by
 
 
 omit [DecidableEq K] in
-theorem contDiff_pot_ins {e : ℕ} (L : Fin e → HermLine ι) (j : Fin e) (hL : IsSmoothHerm (L j)) :
+theorem contDiff_pot_ins {e : ℕ} (L : Fin e → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (j : Fin e) (hL : IsSmoothHerm (L j)) :
     ContDiff ℝ 2 (fun t => pot L j (ins jj t)) := by
   refine contDiff_iff_contDiffAt.2 fun t => ?_
   have hh : ContDiffAt ℝ 2 (L j).h (ins jj t) :=

@@ -55,7 +55,7 @@ def DualStdGraphModel.Statement : Prop :=
     (b : Module.Basis T ℤ (dualLattice (HermLattice.standard K i))),
     RingHom.ker (eval₂Hom (Int.castRingHom (dualStdModelField K i)) (dualStdModelPt b) :
         MRing (Sum.elim (dualBlocks T) (PBlk i)) →+* dualStdModelField K i) =
-      graphIdeal (dualIdeal b) (linForm (ι₂ := PBlk i) (dualStdCoordMat b))
+      graphIdeal (dualIdeal b) (ReciprocityTheory.ChartRestriction.G.AI.I4.linForm (ι₂ := PBlk i) (dualStdCoordMat b))
 
 def DualStdModelRank.Statement : Prop :=
   ∀ (K : Type) [Field K] [NumberField K] (i : ℕ) (T : Type) [Fintype T] [DecidableEq T]
@@ -127,7 +127,7 @@ theorem exists_alpha_ne {α : T → k} (hα : Submodule.span ℤ (Set.range α) 
   exact one_ne_zero ((Submodule.mem_bot ℤ).mp (hle ▸ Submodule.mem_top : (1 : k) ∈ (⊥ : Submodule ℤ k)))
 
 theorem isRelevant_linPrime {n : ℕ} {α : T → k} {M : T → Fin (n + 1) → k}
-    (hα : Submodule.span ℤ (Set.range α) = ⊤) (hM : LinFormsIndep M) : IsRelevant (linPrime α M) := by
+    (hα : Submodule.span ℤ (Set.range α) = ⊤) (hM : LinFormsIndep M) : ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant (linPrime α M) := by
   rintro (⟨⟩ | ⟨⟩)
   · obtain ⟨s, hs⟩ := exists_alpha_ne hα
     refine ⟨s, fun h => hs ?_⟩
@@ -182,7 +182,7 @@ theorem geoNum_linPrime (hCut : LinPrimeCut.Statement) (hBase : LinPrimeBase.Sta
     intro α M hα hM
     have hrel : ∀ κ, ∃ j, (X ⟨κ, j⟩ : MRing (stackedBlocks T)) ∉ linPrime α M := isRelevant_linPrime hα hM
     rw [geoNum]
-    unfold IsRelevant
+    unfold ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant
     rw [dite_eq_left hrel, Fintype.sum_sum_type, Fintype.sum_unique, Fintype.sum_unique]
     rw [show degSecond (Sum.inl default) = 0 from degSecond_inl, show degSecond (Sum.inr default) = 1 from degSecond_inr,
       zero_mul, zero_add, one_mul]

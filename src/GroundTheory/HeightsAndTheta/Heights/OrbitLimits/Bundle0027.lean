@@ -44,7 +44,7 @@ theorem secM_le_chartLat [DecidableEq K] {r : ℕ} (y : (Σ k, ι k) → Ω) (v 
     secM (addBlock y v) (blockDeg (none : Option K) n) ≤ chartLat y (n • b) 1 := by
   classical
   intro s hs
-  have hle : Submodule.span ℤ {s | ∃ g : MRing (addIdx ι r), IsMultiHomog g (blockDeg (none : Option K) n) ∧
+  have hle : Submodule.span ℤ {s | ∃ g : MRing (addIdx ι r), ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g (blockDeg (none : Option K) n) ∧
       aeval (addBlock y v) g = s} ≤ (chartLat y (n • b) 1).toIntSubmodule := by
     rw [Submodule.span_le]
     rintro _ ⟨g, hg, rfl⟩
@@ -84,8 +84,8 @@ theorem oldEmb_injective (r : ℕ) : Function.Injective (oldEmb (ι := ι) r) :=
   cases h
   rfl
 
-theorem homog_rename_old (r : ℕ) {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) :
-    IsMultiHomog (rename (oldEmb (ι := ι) r) g) (fun o => Option.elim o 0 d) := by
+theorem homog_rename_old (r : ℕ) {g : MRing ι} {d : K → ℕ} (hg : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog g d) :
+    ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (rename (oldEmb (ι := ι) r) g) (fun o => Option.elim o 0 d) := by
   classical
   intro m' hm' o
   rw [support_rename_of_injective (oldEmb_injective r)] at hm'
@@ -109,7 +109,7 @@ theorem eval_rename_old {r : ℕ} (z : (Σ k, addIdx ι r k) → ℂ) (g : MRing
   rfl
 
 theorem isSmallH_of_lift [DecidableEq K] {r : ℕ} {y : (Σ k, ι k) → Ω} {v : Fin r → Ω} {N : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {a : ℕ}
-    {B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (addIdx ι r)} (hB : B.a = unitDeg (none : Option K))
+    {B : ReciprocityTheory.ChartRestriction.G.Geo.HermLine (addIdx ι r)} (hB : B.a = ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg (none : Option K))
     (hv : ∀ j, v j ∈ chartLat y N.a a)
     (hmet : ∀ z ∈ mcPts (mCoordIdeal (addBlock y v)), ∀ j,
       secNormAt y N a (v j) (basePart₂ z) * B.h z = ‖z ⟨none, j⟩‖)
@@ -131,8 +131,8 @@ theorem isSmallH_of_lift [DecidableEq K] {r : ℕ} {y : (Σ k, ι k) → Ω} {v 
   set γ : K → ℕ := fun k => (t k).toNat with hγ
   set q₁ := SectionBounded.chartMon c β with hq₁
   set r₁ := e * SectionBounded.chartMon c γ with hr₁
-  have hq₁h : IsMultiHomog q₁ β := SectionBounded.homog_chartMon c β
-  have hr₁h : IsMultiHomog r₁ (δ + γ) := SectionBounded.homog_mul he_h (SectionBounded.homog_chartMon c γ)
+  have hq₁h : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog q₁ β := SectionBounded.homog_chartMon c β
+  have hr₁h : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog r₁ (δ + γ) := SectionBounded.homog_mul he_h (SectionBounded.homog_chartMon c γ)
   have hdeg₁ : ∀ k, (((δ + γ) k : ℕ) : ℤ) = β k + t k := by
     intro k
     simp only [Pi.add_apply, hβ, hγ]
@@ -179,21 +179,21 @@ theorem isSmallH_of_lift [DecidableEq K] {r : ℕ} {y : (Σ k, ι k) → Ω} {v 
   set dG : Option K → ℕ := (fun o => Option.elim o 0 dg) + (fun o => Option.elim o 0 (n • β)) +
       n • Pi.single (none : Option K) 1 with hdG
   set dH : Option K → ℕ := (fun o => Option.elim o 0 dh) + (fun o => Option.elim o 0 (n • (δ + γ))) with hdH
-  have hGh : IsMultiHomog G dG :=
+  have hGh : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog G dG :=
     SectionBounded.homog_mul (SectionBounded.homog_mul (homog_rename_old r hg)
       (homog_rename_old r (SectionBounded.homog_pow hq₁h n)))
       (SectionBounded.homog_pow (SectionBounded.homog_X (ι := addIdx ι r) ⟨none, j⟩) n)
-  have hHh : IsMultiHomog H dH :=
+  have hHh : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog H dH :=
     SectionBounded.homog_mul (homog_rename_old r hh) (homog_rename_old r (SectionBounded.homog_pow hr₁h n))
   have hdegGH : ∀ o, (dG o : ℤ) = dH o + n * B.a o := by
     intro o
     rw [hB, hdG, hdH]
     rcases o with _ | k
-    · simp [unitDeg]
+    · simp [ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg]
     · have h1 := hdeg k
       have h2 := hdeg₁ k
       simp only [Pi.add_apply, Pi.smul_apply, Option.elim_some, smul_eq_mul, Pi.single_apply, reduceCtorEq,
-        if_false, mul_zero, add_zero, unitDeg] at h2 ⊢
+        if_false, mul_zero, add_zero, ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.unitDeg] at h2 ⊢
       push_cast at h1 h2 ⊢
       simp only [ht] at h2
       linear_combination h1 - (n : ℤ) * h2

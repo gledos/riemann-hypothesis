@@ -199,7 +199,7 @@ def DualStackedExcLinPrimeLe.Statement : Prop :=
     (∀ N : Submodule (𝓞 K) (Fin i → K), F'.lattice ≤ N → N ≤ F.lattice → N = F'.lattice ∨ N = F.lattice) →
     (∀ t, (b t : Fin i → K) = a t • (b' t : Fin i → K)) →
     ∀ (k : Type) [Field k] (α : T → k) (M : T → Fin i → k), IsExcResidueData b b' α M →
-      ∀ P : Ideal (MRing (stackedBlocks T)), P.IsPrime → stackedBase b' a ≤ P → IsRelevant P →
+      ∀ P : Ideal (MRing (stackedBlocks T)), P.IsPrime → stackedBase b' a ≤ P → ReciprocityTheory.ChartRestriction.G.Geo.IsRelevant P →
         linPrime α M ≤ P
 
 namespace DualStackedExcResidueExample

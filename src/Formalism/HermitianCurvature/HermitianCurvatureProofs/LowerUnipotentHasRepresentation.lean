@@ -243,7 +243,7 @@ theorem hr_congr {Φ Ψ : Fam k r} (h : HasRep k r z z' Φ)
   exact ⟨ι, inst, κ, w, hκ, fun E _ _ F hF ζ hζ => (e E F hF ζ hζ).trans (h E F hF ζ hζ)⟩
 
 theorem hr_zero : HasRep k r z z' (fun E _ _ _ _ => (0 : E)) :=
-  ⟨Empty, inferInstance, fun i => i.elim, fun i => i.elim, fun i => i.elim, fun _ _ _ _ _ _ _ => by simp⟩
+  ⟨Empty, inferInstance, fun i => i.elim, fun i => i.elim, fun i => i.elim, fun _ _ _ _ _ _ _ => rfl⟩
 
 theorem hr_word (c : ℂ) (w : List (Ix k r × Ix k r)) :
     HasRep k r z z' (fun _ _ _ F ζ => c • wordR (w.map (un k r)) F (mu0 k r z z' ζ)) :=

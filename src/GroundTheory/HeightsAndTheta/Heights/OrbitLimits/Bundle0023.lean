@@ -30,8 +30,8 @@ namespace GroundTheory.Heights₂.Heights.Targets
 
 open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo Filter Topology
 
-theorem log_regLine_tensor {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] (A : HermLine ι)
-    (s : MRing ι) {ε : ℝ} (hε : 0 < ε) {a : K → ℕ} (ha : ∀ k, A.a k = a k) (hs : IsMultiHomog s a)
+theorem log_regLine_tensor {K : Type} [Fintype K] {ι : K → Type} [∀ k, Fintype (ι k)] (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
+    (s : MRing ι) {ε : ℝ} (hε : 0 < ε) {a : K → ℕ} (ha : ∀ k, A.a k = a k) (hs : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog s a)
     (z : (Σ k, ι k) → ℂ) (hz : ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0) :
     Real.log (((regLine A s ε ha hs).tensor A).h z) =
       Real.log (‖eval z (map (Int.castRingHom ℂ) s)‖ ^ 2 + ε * A.h z ^ 2) / 2 := by
@@ -108,7 +108,7 @@ theorem segreChartSet_mono {K : Type*} [Fintype K] {ι : K → Type*} [∀ k, Fi
 
 theorem ptsIntegral_eq_sum_chart (hInt : SegreChartIntegral.Statement) (hPts : SegreChartIntegralPoints.Statement)
     {K : Type} [Fintype K] [DecidableEq K] {ι : K → Type} [∀ k, Fintype (ι k)] {P W : Ideal (MRing ι)} {n m : ℕ}
-    {σ : Fin m ≃ ((k : K) → ι k)} {i : (k : K) → ι k} {L : Fin n → HermLine ι} {g : ((Σ k, ι k) → ℂ) → ℝ} {δ : ℝ}
+    {σ : Fin m ≃ ((k : K) → ι k)} {i : (k : K) → ι k} {L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι} {g : ((Σ k, ι k) → ℂ) → ℝ} {δ : ℝ}
     {G : (Fin m → ℂ) → ℝ} {Φ : Fin n → (Fin m → ℂ) → ℝ} (hW : IsArithVar W (n + 1)) (hPW : P ≤ W)
     (hL : ∀ j, IsSmoothHerm (L j)) (hg : IsDegZeroSmooth g) (hδ : 0 < δ)
     (hsupp : ∀ z, ‖segre z i‖ < δ * ‖segre z‖ → g z = 0)
@@ -181,9 +181,9 @@ namespace ComponentsGenericCount
 theorem proof : ComponentsGenericCount.Statement := by
   classical
   intro n d F A hF hinc
-  have hfib : ∀ y, {x | (∃ J ∈ F, x ∈ zeroSet J) ∧ A *ᵥ x = y} = ⋃ J ∈ F, fibre J A y := by
-    intro y; ext x; simp only [fibre, Set.mem_ofPred_eq, Set.mem_iUnion, exists_prop]; tauto
-  have hcard : ∀ J ∈ F, ∀ y, (fibre J A y).encard ≤ (projDegree J A : ℕ∞) := by
+  have hfib : ∀ y, {x | (∃ J ∈ F, x ∈ zeroSet J) ∧ A *ᵥ x = y} = ⋃ J ∈ F, GroundTheory.Heights₂.Heights.ComplexSets.fibre J A y := by
+    intro y; ext x; simp only [GroundTheory.Heights₂.Heights.ComplexSets.fibre, Set.mem_ofPred_eq, Set.mem_iUnion, exists_prop]; tauto
+  have hcard : ∀ J ∈ F, ∀ y, (GroundTheory.Heights₂.Heights.ComplexSets.fibre J A y).encard ≤ (projDegree J A : ℕ∞) := by
     intro J hJ y
     obtain ⟨-, hfin, hle⟩ := ComplexSets.FibreBound.full n d J A (hF J hJ).1 (hF J hJ).2.1 (hF J hJ).2.2 y
     rw [← hfin.cast_ncard_eq]; exact_mod_cast hle
@@ -191,8 +191,8 @@ theorem proof : ComponentsGenericCount.Statement := by
   · rw [hfib, Nat.cast_sum]
     exact (encard_biUnion_le F _).trans (Finset.sum_le_sum fun J hJ => hcard J hJ y)
   obtain ⟨Δ₁, hΔ₁, hΔ₁y⟩ := exists_prod_ne_zero F
-    (fun J P => ∀ y, eval y P ≠ 0 → (fibre J A y).Finite ∧ (fibre J A y).ncard = projDegree J A ∧
-      ∀ x ∈ fibre J A y, ∃ (U : Set (Fin d → ℂ)) (g : (Fin d → ℂ) → Fin n → ℂ), IsOpen U ∧ y ∈ U ∧
+    (fun J P => ∀ y, eval y P ≠ 0 → (GroundTheory.Heights₂.Heights.ComplexSets.fibre J A y).Finite ∧ (GroundTheory.Heights₂.Heights.ComplexSets.fibre J A y).ncard = projDegree J A ∧
+      ∀ x ∈ GroundTheory.Heights₂.Heights.ComplexSets.fibre J A y, ∃ (U : Set (Fin d → ℂ)) (g : (Fin d → ℂ) → Fin n → ℂ), IsOpen U ∧ y ∈ U ∧
         DifferentiableOn ℂ g U ∧ g y = x ∧ ∀ y' ∈ U, A *ᵥ g y' = y' ∧ g y' ∈ zeroSet J)
     (fun J hJ => by
       obtain ⟨P, hP, hPy⟩ :=
@@ -298,7 +298,7 @@ theorem mixedDisc_update_sum {D : ℕ} {T : Type} [Fintype T] (A : Fin D → Mat
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [e, map_sum]
 
-theorem cxHessian_cons {n : ℕ} (L : Fin n → HermLine ι) (f v : ((Σ k, ι k) → ℂ) → ℝ)
+theorem cxHessian_cons {n : ℕ} (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (f v : ((Σ k, ι k) → ℂ) → ℝ)
     (γ : (Fin (n + 1) → ℂ) → (Σ k, ι k) → ℂ) (y : Fin (n + 1) → ℂ) :
     (fun k => cxHessian
         (fun y' => (Fin.cons f (pot L) : Fin (n + 1) → ((Σ k, ι k) → ℂ) → ℝ) k (γ y')) y) =
@@ -312,7 +312,7 @@ theorem cxHessian_cons {n : ℕ} (L : Fin n → HermLine ι) (f v : ((Σ k, ι k
   · rw [Function.update_of_ne (Fin.succ_ne_zero j)]
     simp only [Fin.cons_succ]
 
-theorem maDensity_cons_sum {n : ℕ} (L : Fin n → HermLine ι) {T : Type} [Fintype T]
+theorem maDensity_cons_sum {n : ℕ} (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) {T : Type} [Fintype T]
     {u : T → ((Σ k, ι k) → ℂ) → ℝ} (hu : ∀ t, IsDegZeroSmooth (u t))
     {γ : (Fin (n + 1) → ℂ) → (Σ k, ι k) → ℂ} {y : Fin (n + 1) → ℂ}
     (hγ : ∀ᶠ y' in 𝓝 y, DifferentiableAt ℂ γ y' ∧ ∀ k, ∃ i, γ y' ⟨k, i⟩ ≠ 0) :
@@ -344,7 +344,7 @@ theorem sheetDensity_sum_left {n : ℕ} (P : Ideal (MRing ι))
   · simp only [dif_neg h, Finset.sum_const_zero]
 
 theorem sheetDensity_sum_right {n : ℕ} (P : Ideal (MRing ι))
-    (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (n + 1 + 1) → ℂ)) (L : Fin n → HermLine ι)
+    (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (n + 1 + 1) → ℂ)) (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     {T : Type} [Fintype T] {u : T → ((Σ k, ι k) → ℂ) → ℝ} (hu : ∀ t, IsDegZeroSmooth (u t))
     (g : ((Σ k, ι k) → ℂ) → ℝ) (y : Fin (n + 1) → ℂ) (w : ((k : K) → ι k) → ℂ) :
     sheetDensity P Ψ (Fin.cons (fun z => ∑ t, u t z) (pot L)) g y w =
@@ -373,20 +373,20 @@ theorem isSmoothHerm_ofWeight {w : ((Σ k, ι k) → ℂ) → ℝ}
   exact Real.contDiff_exp.comp_contDiffOn hs.neg
 
 theorem integrable_fibreSum (hInt : PtsIntegrableStatement) {P : Ideal (MRing ι)} {n : ℕ}
-    (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (n + 1 + 1) → ℂ)) (L : Fin n → HermLine ι)
+    (Ψ : (((k : K) → ι k) → ℂ) →ₗ[ℂ] (Fin (n + 1 + 1) → ℂ)) (L : Fin n → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι)
     {f g : ((Σ k, ι k) → ℂ) → ℝ} (hP : IsArithVar P (n + 2)) (hΨ : IsGoodProj P Ψ)
     (hL : ∀ j, IsSmoothHerm (L j)) (hf : IsDegZeroSmooth f) (hg : IsDegZeroSmooth g) :
-    Integrable (fun y => ∑ᶠ w ∈ fibre P Ψ y, sheetDensity P Ψ (Fin.cons f (pot L)) g y w) := by
+    Integrable (fun y => ∑ᶠ w ∈ ReciprocityTheory.ChartRestriction.G.Geo.fibre P Ψ y, sheetDensity P Ψ (Fin.cons f (pot L)) g y w) := by
   have hf' : ∀ (c : K → ℂ) z, (∀ k, c k ≠ 0) → -f (fun p => c p.1 * z p) = -f z :=
     fun c z hc => by simp only [hf.2 c z hc]
   have hF := isSmoothHerm_ofWeight (w := fun z => -f z) hf' hf.1.neg
   have hG := isSmoothHerm_ofWeight hg.2 hg.1
-  have hLF : ∀ j, IsSmoothHerm ((Fin.cons (HermLine.ofWeight (fun z => -f z) hf') L : Fin (n + 1) → HermLine ι) j) := by
+  have hLF : ∀ j, IsSmoothHerm ((Fin.cons (HermLine.ofWeight (fun z => -f z) hf') L : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) j) := by
     intro j
     refine Fin.cases ?_ (fun j => ?_) j
     · simpa only [Fin.cons_zero] using hF
     · simpa only [Fin.cons_succ] using hL j
-  have hpot : pot (Fin.cons (HermLine.ofWeight (fun z => -f z) hf') L : Fin (n + 1) → HermLine ι) = Fin.cons f (pot L) := by
+  have hpot : pot (Fin.cons (HermLine.ofWeight (fun z => -f z) hf') L : Fin (n + 1) → ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) = Fin.cons f (pot L) := by
     funext j z
     refine Fin.cases ?_ (fun j => ?_) j
     · simp [pot, HermLine.ofWeight, Real.log_exp]
@@ -395,7 +395,7 @@ theorem integrable_fibreSum (hInt : PtsIntegrableStatement) {P : Ideal (MRing ι
     funext z
     simp [logNorm, HermLine.ofWeight, Real.log_exp]
   have h1 : (1 : MRing ι) ∉ P := fun h => hP.2.1.1.ne_top ((Ideal.eq_top_iff_one P).mpr h)
-  have hm : IsMultiHomog (1 : MRing ι) (fun _ => 0) := by
+  have hm : ReciprocityTheory.ChartRestriction.G.Geo.IsMultiHomog (1 : MRing ι) (fun _ => 0) := by
     intro m hm k
     rw [MvPolynomial.support_one] at hm
     simp only [Finset.mem_singleton] at hm
@@ -452,7 +452,7 @@ open GroundTheory.Heights₂.Heights (segreChartIdeal segreChartComponents local
 
 def ChartConeLength.Statement : Prop :=
   ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type) [∀ k, Fintype (ι k)] (P : Ideal (MRing ι)) (n m : ℕ)
-    (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (A : HermLine ι) (s : MRing ι),
+    (σ : Fin m ≃ ((k : K) → ι k)) (i : (k : K) → ι k) (A : ReciprocityTheory.ChartRestriction.G.Geo.HermLine ι) (s : MRing ι),
     IsArithVar P (n + 2) → IsSectionOn P A s →
       ∀ W, W ∈ divSupp P s → IsHorizontal W → ∀ W' ∈ segreChartComponents W σ i,
         ∀ W'' ∈ (W.map (MvPolynomial.map (Int.castRingHom ℂ))).minimalPrimes,
