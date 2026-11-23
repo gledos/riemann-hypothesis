@@ -39,6 +39,7 @@ theorem UpperTheory.V.UnitaryThreeInertia.universal_diagonal_of_triangular_point
       f ((u g).mat a b - ((F.rz R) g).mat a b) = ((push f u) g).mat a b - ((F.rz A) g).mat a b := by
     intro A _ _ f g a b
     simp [push, Frame.rz, GG.mat, GG.map]
+  have : IsLocalRing R := IsCO.toIsLocalRing O
   refine finCrit O R W ?_ ?_
   · intro i
     obtain ⟨g, a, b, -, -, hz⟩ := hW.var i
