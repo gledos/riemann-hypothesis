@@ -287,7 +287,8 @@ theorem exists_twist_of_fibre (hL : Out.Laws) (hL2 : Out.Laws2) (hL3 : Out.Laws3
     haveI := c.fin
     haveI : IsScalarTower ℚ (KA l₁) c.F := IsScalarTower.of_algebraMap_eq' (Subsingleton.elim _ _)
     haveI : Algebra.IsAlgebraic (KA l₁) c.F := Algebra.IsAlgebraic.tower_top (K := ℚ) (KA l₁)
-    haveI : Module.IsTorsionFree (KA l₁) c.F := DivisionSemiring.to_moduleIsTorsionFree
+    have : Module.IsTorsionFree (KA l₁) c.F := DivisionSemiring.to_moduleIsTorsionFree
+    have : Module.IsTorsionFree (KA l₁) k := DivisionSemiring.to_moduleIsTorsionFree
     exact ⟨(IsAlgClosed.lift (R := KA l₁) (S := c.F) (M := k)).toRingHom,
       (IsAlgClosed.lift (R := KA l₁) (S := c.F) (M := k)).comp_algebraMap⟩
   have w : y ≫ X₁.s = spMap θ ≫ spMap (IntermediateField.inclusion c.le).toRingHom := by
