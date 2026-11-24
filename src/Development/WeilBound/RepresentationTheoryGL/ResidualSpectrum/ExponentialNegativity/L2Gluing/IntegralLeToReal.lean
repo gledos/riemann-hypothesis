@@ -13,6 +13,8 @@ open NumberField MeasureTheory Filter Topology
 open scoped ENNReal
 open GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.AutomorphicForm
 
+attribute [local instance 1100] GroundTheory.Global.secondCountableTopology_units Units.instT2Space
+
 namespace PositivityTheory.Rg.Rs.l2glue
 
 theorem cs_mean {α : Type} [MeasurableSpace α] (ν : Measure α) (s : Set α) (f : α → ℂ) :
